@@ -16,6 +16,11 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
+        // Create a rotating cube
+        const cubeGeometry = new THREE.BoxGeometry();
+        const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+        scene.add(cube);
 
         // Create a sphere
         const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
@@ -28,16 +33,27 @@
         camera.position.set(0, 0, 0); // Place the camera at the sphere's center
         sphere.add(camera); // Attach the camera to the sphere
 
+        // Create the "Enter VR" button
+        const enterVRButton = document.createElement('button');
+        enterVRButton.textContent = 'Enter VR';
+        enterVRButton.style.position = 'absolute';
+        enterVRButton.style.top = '20px';
+        enterVRButton.style.left = '20px';
+        enterVRButton.style.padding = '10px 20px';
+        enterVRButton.style.fontSize = '16px';
+        enterVRButton.style.backgroundColor = '#007bff';
+        enterVRButton.style.color = '#ffffff';
+        enterVRButton.style.border = 'none';
+        enterVRButton.style.cursor = 'pointer';
+        sphere.add(enterVRButton); // Attach the button to the sphere
+
         // Check for WebXR support
         if ('xr' in navigator) {
-            const enterVRButton = document.createElement('button');
-            enterVRButton.textContent = 'Enter VR';
             enterVRButton.addEventListener('click', () => {
                 navigator.xr.requestSession('immersive-vr').then((session) => {
                     renderer.xr.setSession(session);
                 });
             });
-            document.body.appendChild(enterVRButton);
         } else {
             const vrUnavailableMessage = document.createElement('p');
             vrUnavailableMessage.textContent = 'VR unavailable';
@@ -47,6 +63,8 @@
         // Animation loop
         const animate = () => {
             requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
             renderer.render(scene, camera);
         };
 

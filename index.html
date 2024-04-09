@@ -45,7 +45,7 @@
         enterVRButton.style.color = '#ffffff';
         enterVRButton.style.border = 'none';
         enterVRButton.style.cursor = 'pointer';
-        sphere.add(enterVRButton); // Attach the button to the sphere
+        document.body.appendChild(enterVRButton); // Attach the button to the overall view
 
         // Check for WebXR support
         if ('xr' in navigator) {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebXR Example</title>
+    <title>WebXR Example with 360 Video Texture</title>
     <!-- Include Three.js and WebXR polyfill -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webxr-polyfill/1.0.0/webxr-polyfill.min.js"></script>
@@ -16,15 +16,12 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // Create a rotating cube
-        const cubeGeometry = new THREE.BoxGeometry();
-        const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-        scene.add(cube);
-
         // Create a sphere
-        const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
-        const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+        const sphereGeometry = new THREE.SphereGeometry(10, 64, 64); // Adjust the sphere size as needed
+        const sphereMaterial = new THREE.MeshBasicMaterial({
+            map: new THREE.TextureLoader().load('video.mp4'), // Load your video texture here
+            side: THREE.BackSide, // Render the inside of the sphere
+        });
         const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
         scene.add(sphere);
 
@@ -63,8 +60,7 @@
         // Animation loop
         const animate = () => {
             requestAnimationFrame(animate);
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
+            sphere.rotation.y += 0.005; // Rotate the sphere
             renderer.render(scene, camera);
         };
 

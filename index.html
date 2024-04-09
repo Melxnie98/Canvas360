@@ -19,7 +19,7 @@
         // Create a sphere
         const sphereGeometry = new THREE.SphereGeometry(10, 64, 64); // Adjust the sphere size as needed
         const sphereMaterial = new THREE.MeshBasicMaterial({
-            map: new THREE.TextureLoader().load('video.mp4'), // Load your video texture here
+            map: new THREE.VideoTexture(getVideoElement()), // Load your video texture here
             side: THREE.BackSide, // Render the inside of the sphere
         });
         const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
@@ -49,6 +49,8 @@
             enterVRButton.addEventListener('click', () => {
                 navigator.xr.requestSession('immersive-vr').then((session) => {
                     renderer.xr.setSession(session);
+                    // Play the video when entering VR
+                    sphereMaterial.map.video.play();
                 });
             });
         } else {
@@ -65,6 +67,19 @@
         };
 
         animate();
+
+        // Helper function to create a video element
+        function getVideoElement() {
+            const video = document.createElement('video');
+            video.src = 'video.mp4'; // Replace with your video URL
+            video.loop = true;
+            video.muted = true;
+            video.crossOrigin = 'anonymous';
+            video.setAttribute('webkit-playsinline', 'true');
+            video.setAttribute('playsinline', 'true');
+            video.play();
+            return video;
+        }
     </script>
 </body>
 </html>

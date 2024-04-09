@@ -1,85 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebXR Example with 360 Video Texture</title>
-    <!-- Include Three.js and WebXR polyfill -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webxr-polyfill/1.0.0/webxr-polyfill.min.js"></script>
-</head>
-<body>
-    <script>
-        // Set up the scene
-        const scene = new THREE.Scene();
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>WebXR Example with 360 Video Texture</title>
+        <!-- Include Three.js and WebXR polyfill -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webxr-polyfill/1.0.0/webxr-polyfill.min.js"></script>
+    </head>
+    <body>
+        <script>
+            // Set up the scene
+            const scene = new THREE.Scene();
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
 
-        // Create a sphere
-        const sphereGeometry = new THREE.SphereGeometry(10, 64, 64); // Adjust the sphere size as needed
-        const sphereMaterial = new THREE.MeshBasicMaterial({
-            map: new THREE.VideoTexture(getVideoElement()), // Load your video texture here
-            side: THREE.BackSide, // Render the inside of the sphere
-        });
-        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        scene.add(sphere);
-
-        // Position the camera (headset) inside the sphere
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 0, 0); // Place the camera at the sphere's center
-        sphere.add(camera); // Attach the camera to the sphere
-
-        // Create the "Enter VR" button
-        const enterVRButton = document.createElement('button');
-        enterVRButton.textContent = 'Enter VR';
-        enterVRButton.style.position = 'absolute';
-        enterVRButton.style.top = '20px';
-        enterVRButton.style.left = '20px';
-        enterVRButton.style.padding = '10px 20px';
-        enterVRButton.style.fontSize = '16px';
-        enterVRButton.style.backgroundColor = '#007bff';
-        enterVRButton.style.color = '#ffffff';
-        enterVRButton.style.border = 'none';
-        enterVRButton.style.cursor = 'pointer';
-        document.body.appendChild(enterVRButton); // Attach the button to the overall view
-
-        // Check for WebXR support
-        if ('xr' in navigator) {
-            enterVRButton.addEventListener('click', () => {
-                navigator.xr.requestSession('immersive-vr').then((session) => {
-                    renderer.xr.setSession(session);
-                    // Play the video when entering VR
-                    sphereMaterial.map.video.play();
-                });
+            // Create a sphere
+            const sphereGeometry = new THREE.SphereGeometry(10, 64, 64); // Adjust the sphere size as needed
+            const sphereMaterial = new THREE.MeshBasicMaterial({
+                map: new THREE.VideoTexture(getVideoElement()), // Load your video texture here
+                side: THREE.BackSide, // Render the inside of the sphere
             });
-        } else {
-            const vrUnavailableMessage = document.createElement('p');
-            vrUnavailableMessage.textContent = 'VR unavailable';
-            document.body.appendChild(vrUnavailableMessage);
-        }
+            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            scene.add(sphere);
 
-        // Animation loop
-        const animate = () => {
-            requestAnimationFrame(animate);
-            sphere.rotation.y += 0.005; // Rotate the sphere
-            renderer.render(scene, camera);
-        };
+            // Position the camera (headset) inside the sphere
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 0, 0); // Place the camera at the sphere's center
+            sphere.add(camera); // Attach the camera to the sphere
 
-        animate();
+            // Create the "Enter VR" button
+            const enterVRButton = document.createElement('button');
+            enterVRButton.textContent = 'Enter VR';
+            enterVRButton.style.position = 'absolute';
+            enterVRButton.style.top = '20px';
+            enterVRButton.style.left = '20px';
+            enterVRButton.style.padding = '10px 20px';
+            enterVRButton.style.fontSize = '16px';
+            enterVRButton.style.backgroundColor = '#007bff';
+            enterVRButton.style.color = '#ffffff';
+            enterVRButton.style.border = 'none';
+            enterVRButton.style.cursor = 'pointer';
+            document.body.appendChild(enterVRButton); // Attach the button to the overall view
 
-        // Helper function to create a video element
-        function getVideoElement() {
-            const video = document.createElement('video');
-            video.src = 'video.mp4'; // Replace with your video URL
-            video.loop = true;
-            video.muted = true;
-            video.crossOrigin = 'anonymous';
-            video.setAttribute('webkit-playsinline', 'true');
-            video.setAttribute('playsinline', 'true');
-            video.play();
-            return video;
-        }
-    </script>
-</body>
+            // Check for WebXR support
+            if ('xr' in navigator) {
+                enterVRButton.addEventListener('click', () => {
+                    navigator.xr.requestSession('immersive-vr').then((session) => {
+                        renderer.xr.setSession(session);
+                        // Play the video when entering VR
+                        sphereMaterial.map.video.play();
+                    });
+                });
+            } else {
+                const vrUnavailableMessage = document.createElement('p');
+                vrUnavailableMessage.textContent = 'VR unavailable';
+                document.body.appendChild(vrUnavailableMessage);
+            }
+
+            // Animation loop
+            const animate = () => {
+                requestAnimationFrame(animate);
+                sphere.rotation.y += 0.005; // Rotate the sphere
+                renderer.render(scene, camera);
+            };
+
+            animate();
+
+            // Helper function to create a video element
+            function getVideoElement() {
+                const video = document.createElement('video');
+                video.src = 'path/to/your/360-video.mp4'; // Replace with your video URL
+                video.loop = true;
+                video.muted = true;
+                video.crossOrigin = 'anonymous';
+                video.setAttribute('webkit-playsinline', 'true');
+                video.setAttribute('playsinline', 'true');
+
+                // Listen for video load and play events
+                video.addEventListener('loadeddata', () => {
+                    console.log('Video loaded successfully.');
+                });
+
+                video.addEventListener('error', (event) => {
+                    console.error('Error loading video:', event.target.error);
+                });
+
+                // Start playing the video when user interacts (e.g., clicks "Enter VR")
+                video.play();
+
+                return video;
+            }
+        </script>
+    </body>
 </html>

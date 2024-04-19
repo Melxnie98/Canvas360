@@ -34,7 +34,7 @@
             }
         }
     </script>
-        <script type="module">
+    <script type="module">
         import { WebGLRenderer, PerspectiveCamera, Scene } from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
         import { LumaSplatsThree } from '@lumaai/luma-web';
@@ -120,14 +120,12 @@
             }
         }
     
-        
-    
         // Call function to create VR controllers
         createVRControllers();
     
-        
-        // Add the VR button to the canvas
-        canvas.appendChild(VRButton.createButton(renderer));
+        // Add the VR button to the container
+        let vrButtonContainer = document.getElementById('vr-button-container');
+        vrButtonContainer.appendChild(VRButton.createButton(renderer));
     
         renderer.setAnimationLoop(() => {
             controls.update();
@@ -139,6 +137,6 @@
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
-        </script>
+    </script>
 </body>
 </html>

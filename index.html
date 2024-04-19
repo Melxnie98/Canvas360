@@ -34,17 +34,7 @@
 <body>
     <div id="vr-button-container"></div>
     <canvas></canvas>
-    <div class="splat"></div> <!-- Add splat element -->
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.157.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.157.0/examples/jsm/",
-                "@lumaai/luma-web": "https://unpkg.com/@lumaai/luma-web@0.2.0/dist/library/luma-web.module.js"
-            }
-        }
-    </script>
-    <script type="module">
+    <div class="splat">  <script type="module">
         import * as THREE from 'three'; 
         import { WebGLRenderer, PerspectiveCamera, Scene } from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -149,5 +139,16 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
     </script>
+    </div> <!-- Add splat element -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.157.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.157.0/examples/jsm/",
+                "@lumaai/luma-web": "https://unpkg.com/@lumaai/luma-web@0.2.0/dist/library/luma-web.module.js"
+            }
+        }
+    </script>
+  
 </body>
 </html>

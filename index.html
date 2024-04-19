@@ -38,7 +38,10 @@
 
     let splat = new LumaSplatsThree({
         source: 'https://lumalabs.ai/capture/d80d4876-cf71-4b8a-8b5b-49ffac44cd4a'
+         // Add the VR button to the canvas
+    
     });
+    splat.appendChild(VRButton.createButton(renderer));
 
     // Function to create VR controllers
     function createVRControllers() {

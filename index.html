@@ -109,7 +109,7 @@
         
             scene.add(splat);
             // Add the VR button to the canvas
-            canvas.appendChild(VRButton.createButton(renderer));
+            scene.add(VRButton.createButton(renderer));
         
             renderer.setAnimationLoop(() => {
                 controls.update();

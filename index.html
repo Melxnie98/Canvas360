@@ -7,12 +7,18 @@
     <style>
         
 
-        
+        #vr-button-container {
+            position: absolute;
+            bottom: 100px; /* Adjust this value as needed */
+            left: 50%; /* Adjust this value as needed */
+            z-index: 2; /* Ensure VR button is above canvas */
+            transform: translateX(-50%); /* Center horizontally */
+        }
     </style>
 </head>
 <body>
     
-    <canvas></canvas>
+    <canvas><div id="vr-button-container"></div></canvas>
     
     <script type="importmap">
         {
@@ -115,7 +121,7 @@
     
         // Add the VR button to the container
         let vrButtonContainer = document.getElementById('vr-button-container');
-        canvas.appendChild(VRButton.createButton(renderer));
+        vrButtonContainer.appendChild(VRButton.createButton(renderer));
     
         // Adjust canvas size to match window size
         function onWindowResize() {

@@ -41,7 +41,7 @@
                  // Add the VR button to the canvas
             
             });
-            canvas.appendChild(VRButton.createButton(renderer));
+            
         
             // Function to create VR controllers
             function createVRControllers() {
@@ -102,13 +102,14 @@
                 }
             }
         
-            // Add the VR button to the canvas
-            canvas.appendChild(VRButton.createButton(renderer));
+            
         
             // Call function to create VR controllers
             createVRControllers();
         
             scene.add(splat);
+            // Add the VR button to the canvas
+            canvas.appendChild(VRButton.createButton(renderer));
         
             renderer.setAnimationLoop(() => {
                 controls.update();

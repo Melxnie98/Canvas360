@@ -7,17 +7,11 @@
     <style>
         
 
-        #vr-button-container {
-            position: absolute;
-            bottom: 100px; /* Adjust this value as needed */
-            left: 50%; /* Adjust this value as needed */
-            z-index: 2; /* Ensure VR button is above canvas */
-            transform: translateX(-50%); /* Center horizontally */
-        }
+        
     </style>
 </head>
 <body>
-    <div id="vr-button-container"></div>
+    
     <canvas></canvas>
     
     <script type="importmap">
@@ -52,6 +46,7 @@
         let splat = new LumaSplatsThree({
             source: 'https://lumalabs.ai/capture/d80d4876-cf71-4b8a-8b5b-49ffac44cd4a'
         });
+        scene.add(splat);
         
     
    
@@ -134,7 +129,7 @@
     
         // Animation loop
         function animate() {
-            scene.add(splat);
+            
             controls.update();
             renderer.render(scene, camera);
             requestAnimationFrame(animate);

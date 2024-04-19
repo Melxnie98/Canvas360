@@ -119,7 +119,7 @@ class VRButton {
 			element.style.color = '#fff';
 			element.style.font = 'normal 13px sans-serif';
 			element.style.textAlign = 'center';
-			element.style.opacity = '0.2';
+			element.style.opacity = '0.9';
 			element.style.outline = 'none';
 			element.style.zIndex = '999';
 

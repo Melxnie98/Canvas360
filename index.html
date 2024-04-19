@@ -52,7 +52,7 @@
         let splat = new LumaSplatsThree({
             source: 'https://lumalabs.ai/capture/d80d4876-cf71-4b8a-8b5b-49ffac44cd4a'
         });
-        scene.add(splat);
+        
     
    
        // Function to create VR controllers
@@ -134,6 +134,7 @@
     
         // Animation loop
         function animate() {
+            scene.add(splat);
             controls.update();
             renderer.render(scene, camera);
             requestAnimationFrame(animate);

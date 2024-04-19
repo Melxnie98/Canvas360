@@ -61,8 +61,9 @@
         });
         scene.add(splat);
     
-        // Function to create VR controllers
-        function createVRControllers() {
+   
+       // Function to create VR controllers
+       function createVRControllers() {
             function onSelectStart() {
                 this.children[0].scale.z = 10;
                 this.userData.isSelecting = true; 
@@ -100,6 +101,24 @@
             let controllerGrip2 = renderer.xr.getControllerGrip(1);
             controllerGrip2.add(controllerModelFactory.createControllerModel(controllerGrip2));
             scene.add(controllerGrip2);
+            
+            window.addEventListener('resize', onWindowResize, false);
+    
+            function buildController(data) {
+                let geometry, material;
+                switch (data.targetRayMode) {
+                    case 'tracked-pointer':
+                        geometry = new THREE.BufferGeometry();
+                        geometry.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0, 0, 0, -1], 3));
+                        geometry.setAttribute('color', new THREE.Float32BufferAttribute([0.5, 0.5, 0.5, 0, 0, 0], 3));
+                        material = new THREE.LineBasicMaterial({ vertexColors: true, blending: THREE.AdditiveBlending });
+                        return new THREE.Line(geometry, material);
+                    case 'gaze':
+                        geometry = new THREE.RingBufferGeometry(0.02, 0.04, 32).translate(0, 0, -1);
+                        material = new THREE.MeshBasicMaterial({ opacity: 0.5, transparent: true });
+                        return new THREE.Mesh(geometry, material);
+                }
+            }
         }
     
     
@@ -111,14 +130,14 @@
         vrButtonContainer.appendChild(VRButton.createButton(renderer));
     
         // Adjust canvas size to match window size
-        function resizeCanvas() {
+        function onWindowResize() {
             renderer.setSize(window.innerWidth, window.innerHeight);
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
         }
     
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas(); // Call once to set initial size
+        window.addEventListener('resize', onWindowResize);
+        onWindowResize(); // Call once to set initial size
     
         // Animation loop
         function animate() {

@@ -38,10 +38,19 @@
         import { XRControllerModelFactory } from '/libs/XRControllerModelFactory.js';
     
         let canvas = document.querySelector('canvas');
-        let renderer = new WebGLRenderer({
-            canvas: canvas,
-            antialias: false
-        });
+        let renderer;
+        function createRenderer() {
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(width, height);
+  renderer.outputEncoding = THREE.sRGBEncoding;  //Enable the XR 
+  renderer.xr.enabled = true;
+  renderer.shadowMap.enabled = true;
+  renderer.setClearColor(0x000000, 1.0);
+  canvas.appendChild(renderer.domElement);
+  canvas.appendChild(VRButton.createButton(renderer));
+  console.log('Renderer created');
+}
     
         let scene = new Scene();
         let camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);

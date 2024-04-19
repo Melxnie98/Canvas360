@@ -25,11 +25,13 @@
         import {VRButton} from '/libs/VRButton.js';
         import{XRControllerModelFactory} from '/libs/XRControllerModelFactory.js';
         
+        
         let canvas = document.querySelector('canvas');
         
         let renderer = new WebGLRenderer({
             canvas: canvas,
             antialias: false
+            
         });
         
         renderer.setSize(window.innerWidth, window.innerHeight, false);
@@ -103,6 +105,7 @@ function createVRControllers(){
      }
    }
  }
+        canvas.appendChild(VRButton.createButton(renderer));
         scene.add(splat);
         
         renderer.setAnimationLoop(() => {

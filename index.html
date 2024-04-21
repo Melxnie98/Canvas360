@@ -32,13 +32,13 @@
     <script type="module">
         import * as THREE from 'three'; 
         import { WebGLRenderer, PerspectiveCamera, Scene } from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { OrbitControls } from '/libs/OrbitControls.js';
         import { LumaSplatsThree } from '@lumaai/luma-web';
         import { VRButton } from '/libs/VRButton.js';
         import { XRControllerModelFactory } from '/libs/XRControllerModelFactory.js';
     
         let canvas = document.querySelector('canvas');
-        let renderer;
+        let renderer, scene, camera, controller1, controller2, controllerGrip1, controllerGrip2;
         function createRenderer() {
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setPixelRatio(window.devicePixelRatio);
@@ -51,10 +51,27 @@
             canvas.appendChild(VRButton.createButton(renderer));
             console.log('Renderer created');
         }
-    
-        let scene = new Scene();
-        let camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 2;
+        //Make the scene
+        function createScene() {
+            scene = new THREE.Scene();
+            console.log('scene created');
+        }
+                //Make the camera
+        function createCamera(){
+            camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight,0.1, 1000);
+            camera.position.z = -20; //set camera position
+            camera.position.y = 10;
+            camera.rotation.set(0,Math.PI/1.0,0)
+            const helper = new THREE.CameraHelper(camera);
+            cameraControl = new OrbitControls(camera, renderer.domElement);
+            camera.add( listener );
+            scene.add(helper);
+            scene.add(camera);
+            //camera.lookAt(scene.position);
+            console.log('camera created');
+        }
+
+       
         let controls = new OrbitControls(camera, canvas);
         controls.enableDamping = true;
     
@@ -122,21 +139,20 @@
                 }
             }
         }
-    
-    
-        // Call function to create VR controllers
-        createVRControllers();
+        
     
         // Add the VR button to the container
         let vrButtonContainer = document.getElementById('vr-button-container');
         vrButtonContainer.appendChild(VRButton.createButton(renderer));
     
-        // Adjust canvas size to match window size
+     
         function onWindowResize() {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            camera.aspect = window.innerWidth / window.innerHeight;
+            width = window.innerWidth;
+            height = window.innerHeight;
             camera.updateProjectionMatrix();
-        }
+            renderer.setSize(width, height);
+            console.log('window size changed');
+         }
     
         window.addEventListener('resize', onWindowResize);
         onWindowResize(); // Call once to set initial size
@@ -147,8 +163,19 @@
             renderer.render(scene, camera);
             requestAnimationFrame(animate);
         }
-    
-        animate(); // Start animation loop
+        //initialise all the stuff
+        function init() {
+            
+            createScene();
+            createRenderer();
+            createCamera();
+            window.addEventListener("resize", onWindowResize, false);
+            createLight();
+            createVRControllers();
+            animate();// Start animation loop
+        }
+        
+        init();
     </script>
 </body>
 </html>

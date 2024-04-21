@@ -32,7 +32,7 @@
     <script type="module">
         import * as THREE from 'three'; 
         import { WebGLRenderer, PerspectiveCamera, Scene } from 'three';
-        import { OrbitControls } from '/libs/OrbitControls.js';
+       // import { OrbitControls } from '/libs/OrbitControls.js';
         import { LumaSplatsThree } from '@lumaai/luma-web';
         import { VRButton } from '/libs/VRButton.js';
         import { XRControllerModelFactory } from '/libs/XRControllerModelFactory.js';
@@ -60,18 +60,18 @@
         function createCamera(){
             camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight,0.1, 1000);
            
-            const helper = new THREE.CameraHelper(camera);
-            cameraControl = new OrbitControls(camera, renderer.domElement);
-            camera.add( listener );
-            scene.add(helper);
+            //const helper = new THREE.CameraHelper(camera);
+           // cameraControl = new OrbitControls(camera, renderer.domElement);
+           // camera.add( listener );
+           // scene.add(helper);
             scene.add(camera);
             //camera.lookAt(scene.position);
             console.log('camera created');
         }
 
        
-        let controls = new OrbitControls(camera, canvas);
-        controls.enableDamping = true;
+       // let controls = new OrbitControls(camera, canvas);
+       // controls.enableDamping = true;
     
         let splat = new LumaSplatsThree({
             source: 'https://lumalabs.ai/capture/d80d4876-cf71-4b8a-8b5b-49ffac44cd4a'

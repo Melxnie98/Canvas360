@@ -72,11 +72,14 @@
        
        // let controls = new OrbitControls(camera, canvas);
        // controls.enableDamping = true;
-    
+    function createSplat(){
         let splat = new LumaSplatsThree({
             source: 'https://lumalabs.ai/capture/d80d4876-cf71-4b8a-8b5b-49ffac44cd4a'
+            
         });
         scene.add(splat);
+    }
+        
     
    
        // Function to create VR controllers
@@ -168,7 +171,8 @@
             createRenderer();
             createCamera();
             window.addEventListener("resize", onWindowResize, false);
-            createLight();
+            //createLight();
+            createSplat()
             createVRControllers();
             animate();// Start animation loop
         }

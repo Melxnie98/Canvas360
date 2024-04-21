@@ -56,7 +56,8 @@
         });
         renderer.xr.enabled = true;
 
-        let vrButton = VRButton.createButton(renderer); 
+        let vrButton = VRButton.createButton(renderer);
+        document.body.appendChild(vrButton);
     
         //create scene
         let scene = new Scene();

@@ -36,6 +36,8 @@
         import { LumaSplatsThree } from '@lumaai/luma-web';
         import { VRButton } from '/libs/VRButton.js';
         import { XRControllerModelFactory } from '/libs/XRControllerModelFactory.js';
+        var width = window.innerWidth;
+        var height = window.innerHeight;
     
         let canvas = document.querySelector('canvas');
         let renderer, scene, camera, controller1, controller2, controllerGrip1, controllerGrip2;

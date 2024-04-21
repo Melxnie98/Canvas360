@@ -68,7 +68,9 @@
         controls.enableDamping = true;
     
         let splat = new LumaSplatsThree({
-            source: 'https://lumalabs.ai/capture/d80d4876-cf71-4b8a-8b5b-49ffac44cd4a'
+            source: 'https://lumalabs.ai/capture/d80d4876-cf71-4b8a-8b5b-49ffac44cd4a',
+            // controls the particle entrance animation
+	        particleRevealEnabled: true,
         });
         scene.add(splat);
     
